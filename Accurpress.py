@@ -58,27 +58,35 @@ for numbersToAdd in range(1, n + 1):
     for startIndex in range(0, n):
         # If only one number, the sum is that number
         if numbersToAdd == 1:
-            print("Sum #" + str(counter) + ": " + str(numbers[startIndex]))
+            output_unsorted.append("%s = %s" % (str(numbers[startIndex]), str(numbers[startIndex])))
+            print("Sum #%s: %s" % (str(counter), output_unsorted[counter - 1]))
             counter += 1
         # Conditional to determine if this combination i and j would exceed the number of numbers
         elif numbersToAdd + startIndex > n:
-            print("Combination of numbersToAdd and startIndex exceed the maximum index")
+            #print("Combination of numbersToAdd and startIndex exceed the maximum index")
             break
         # Else, add the numbers and store it
         else:
             tempSum = 0.0
-            sum = 0.0
+            tempSumString = ""
+            total = 0.0
             # Third loop adds the numbers
             for currentIndex in range(startIndex, numbersToAdd + startIndex):
                 # If the current index is less than the final number, store in a temporary sum
-                if currentIndex < numbersToAdd + startIndex - 1:
+                if currentIndex < numbersToAdd + startIndex - 1:   
+                    if currentIndex == startIndex:
+                        tempSumString = tempSumString + str(numbers[currentIndex])
+                    else:
+                        tempSumString = tempSumString + " + " + str(numbers[currentIndex])  
                     tempSum += numbers[currentIndex]
+
                     # print("Temp sum: " + str(tempSum))
                 # Otherwise, add tempSum to the final number and store it
                 else:
                     for endIndex in range(currentIndex, n):
-                        sum = tempSum + numbers[endIndex]
-                        print("Sum #" + str(counter) + ": " + str(sum))
+                        tempSumStringFinal = tempSumString + " + " + str(numbers[endIndex])
+                        total = tempSum + numbers[endIndex]
+                        print("Sum #" + str(counter) + ": " + tempSumStringFinal + " = " + str(total))
                         counter += 1
                 
 
