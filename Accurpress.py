@@ -77,23 +77,30 @@ for r in range(1, n + 1):
                 equation = equation + " + " + str(subset[i])
                 equationFraction = equationFraction + " + " + display_fraction(subset[i])
             total = total + subset[i]
-        output.append(("Sum #%s: " % str(counter), equation, total, equationFraction))
-        print("%s%s = %s" % (output[counter - 1][0], output[counter - 1][1], output[counter - 1][2]))
-        counter += 1
+        # Fourth loop to append only if non-duplicate solution
+        not_dupe = True
+        for j in range(0, len(output)):
+            if output[j][2] == total:
+                not_dupe = False
+                break
+        if not_dupe:
+            output.append(("Sum #%s: " % str(counter), equation, total, equationFraction))
+            print("%s%s = %s" % (output[counter - 1][0], output[counter - 1][1], output[counter - 1][2]))
+            counter += 1
 
 # Write results to files
 print("Now creating files for output")
 f = open('output_unsorted.txt', 'w')
 for i in range(0, counter - 1):
-    f.write("%s %s = %s\n" % (output[i][0], output[i][3], output[i][2]))
+    f.write("%s = %s\n" % (output[i][3], display_fraction((output[i][2]))))
 f.close()
 
 output_sorted = sorted(output, key = lambda x: float(x[2]))
 f2 = open('output_sums.txt', 'w')
 f3 = open('output_sorted.txt', 'w')
 for i in range(0, counter - 1):
-    f2.write("%s %s\n" % (output_sorted[i][0], output_sorted[i][2]))
-    f3.write("%s %s = %s\n" % (output_sorted[i][0], output_sorted[i][3], output_sorted[i][2]))
+    f2.write("%s\n" % (output_sorted[i][2]))
+    f3.write("%s = %s\n" % (output_sorted[i][3], display_fraction((output_sorted[i][2]))))
 f2.close()
 f3.close()
 
